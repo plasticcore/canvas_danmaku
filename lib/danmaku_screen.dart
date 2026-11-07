@@ -128,6 +128,7 @@ class _DanmakuScreenState<T> extends State<DanmakuScreen<T>>
 
   int _time = 0;
   void _tick(Duration elapsed) {
+    DmUtils.debugTicks++;      // ← 新增
     _notifier.value = elapsed.inMilliseconds + _lastTick;
     if (_time++ > 10) {
       _time = 0;
