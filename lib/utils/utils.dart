@@ -66,11 +66,13 @@ abstract final class DmUtils {
       strokeWidth / 2.0,
     );
 
+    // 2 倍超采样：位图分辨率高于显示分辨率，缩回时能获得平滑的亚像素运动
+    const int ss = 2;
+    final double scale = devicePixelRatio * ss;
+
     final rec = ui.PictureRecorder();
     final canvas = ui.Canvas(rec);
-    if (devicePixelRatio != 1) {
-      canvas.scale(devicePixelRatio);
-    }
+    canvas.scale(scale);
 
     if (strokeWidth != 0) {
       final builder = ui.ParagraphBuilder(ui.ParagraphStyle(
@@ -123,8 +125,8 @@ abstract final class DmUtils {
 
     final pic = rec.endRecording();
     final img = pic.toImageSync(
-      (w * devicePixelRatio).ceil(),
-      (h * devicePixelRatio).ceil(),
+      (w * scale).ceil(),
+      (h * scale).ceil(),
     );
     pic.dispose();
     return img;
