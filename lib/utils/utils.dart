@@ -7,6 +7,8 @@ import 'package:material_ui/material_ui.dart';
 abstract final class DmUtils {
   static const maxRasterizeSize = 8192.0;
 
+  static int debugTicks = 0;   // ← 新增：调试用
+  
   static double devicePixelRatio = 1;
   static final Paint _selfSendPaint = Paint()
     ..style = PaintingStyle.stroke
