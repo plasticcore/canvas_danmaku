@@ -11,7 +11,7 @@ abstract base class BaseDanmakuPainter extends CustomPainter {
   final int tick;
 
   static final Paint _paint = Paint()
-    ..filterQuality = FilterQuality.low;
+    ..filterQuality = FilterQuality.medium;   // low → medium
 
   const BaseDanmakuPainter({
     required this.length,
