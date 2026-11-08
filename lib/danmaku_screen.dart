@@ -187,13 +187,7 @@ class _DanmakuScreenState<T> extends State<DanmakuScreen<T>>
         width: danmakuWidth,
         height: danmakuHeight,
         content: content,
-        image: DmUtils.recordDanmakuImage(
-          contentParagraph: paragraph,
-          content: content,
-          fontSize: _option.fontSize,
-          fontWeight: _option.fontWeight,
-          strokeWidth: _option.strokeWidth,
-        ));
+      );
 
     for (var i = 0; i < _trackCount; i++) {
       final index =
