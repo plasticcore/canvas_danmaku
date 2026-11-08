@@ -11,6 +11,10 @@ abstract final class DmUtils {
   /// false = 用阴影（推荐：边缘均匀，白底也清楚）
   static bool useStrokeOutline = false;
 
+  /// 文字四周预留边距：描边模式按描边宽度，阴影模式固定 8（模糊 4px 的两倍）
+  static double contentPad(double strokeWidth) =>
+      useStrokeOutline ? strokeWidth : 8.0;
+
   static double devicePixelRatio = 1;
   static final Paint _selfSendPaint = Paint()
     ..style = PaintingStyle.stroke
@@ -46,7 +50,16 @@ abstract final class DmUtils {
     }
 
     builder
-      ..pushStyle(ui.TextStyle(color: content.color, fontSize: fontSize))
+      ..pushStyle(ui.TextStyle(
+        color: content.color,
+        fontSize: fontSize,
+        shadows: useStrokeOutline
+            ? null
+            : const [
+                Shadow(color: Color(0xCC000000), blurRadius: 2),
+                Shadow(color: Color(0x99000000), blurRadius: 4),
+              ],
+      ))
       ..addText(content.text);
 
     return builder.build()
@@ -60,12 +73,13 @@ abstract final class DmUtils {
     required int fontWeight,
     required double strokeWidth,
   }) {
-    double w = contentParagraph.maxIntrinsicWidth + strokeWidth;
-    double h = contentParagraph.height + strokeWidth;
+    final double pad = contentPad(strokeWidth);
+    double w = contentParagraph.maxIntrinsicWidth + pad;
+    double h = contentParagraph.height + pad;
 
     final offset = Offset(
-      (strokeWidth / 2.0) + (content.selfSend ? 2.0 : 0.0),
-      strokeWidth / 2.0,
+      pad / 2 + (content.selfSend ? 2.0 : 0.0),
+      pad / 2,
     );
 
     final rec = ui.PictureRecorder();
@@ -74,7 +88,7 @@ abstract final class DmUtils {
       canvas.scale(devicePixelRatio);
     }
 
-    if (strokeWidth != 0) {
+    if (useStrokeOutline && strokeWidth != 0) {
       final builder = ui.ParagraphBuilder(ui.ParagraphStyle(
         textAlign: TextAlign.left,
         fontWeight: FontWeight.values[fontWeight],
