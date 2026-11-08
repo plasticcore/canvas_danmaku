@@ -7,6 +7,10 @@ import 'package:material_ui/material_ui.dart';
 abstract final class DmUtils {
   static const maxRasterizeSize = 8192.0;
 
+  /// true  = 用描边（细线，白底容易糊、边缘不均）
+  /// false = 用阴影（推荐：边缘均匀，白底也清楚）
+  static bool useStrokeOutline = false;
+
   static double devicePixelRatio = 1;
   static final Paint _selfSendPaint = Paint()
     ..style = PaintingStyle.stroke
