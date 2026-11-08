@@ -66,10 +66,11 @@ class DanmakuItem<T> {
         fontWeight: fontWeight,
         strokeWidth: strokeWidth,
       );
+      final pad = DmUtils.contentPad(strokeWidth);
       width = paragraph.maxIntrinsicWidth +
-          strokeWidth +
+          pad +
           (content.selfSend ? 4.0 : 0.0);
-      height = paragraph.height + strokeWidth;
+      height = paragraph.height + pad;
       paragraph.dispose();
     }
   }
